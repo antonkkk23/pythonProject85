@@ -20,6 +20,17 @@ def player_motion(obj, s):
         obj.top = 0
     elif obj.bottom >= H:
         obj.bottom = H
+
+def opponent_motion(obj, p_obj,s):
+    if obj.top < p_obj.y:
+        obj.y += s
+    elif obj.bottom > p_obj.y:
+        obj.y -= s
+
+    if obj.top <= 0:
+        obj.top = 0
+    elif obj.bottom >= H:
+        obj.bottom = H
 W = 1280
 H = 720
 FPS = 1000
@@ -40,7 +51,7 @@ pg.display.set_caption('Ping Pong | ') # создаем экран игры ра
 
 speed = 3
 p_speed = 0
-o_speed = 0
+o_speed = speed
 ball_moving = False
 speed_x = speed_y = speed
 
@@ -69,3 +80,4 @@ while True:  # цикл игры
 
     ball_move(ball)
     player_motion(player,p_speed)
+    opponent_motion(opponent,ball, o_speed)
