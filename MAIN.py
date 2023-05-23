@@ -13,6 +13,13 @@ def ball_move(obj):
     elif obj.colliderect(player) or obj.colliderect(opponent):
         speed_x *= -1
 
+def player_motion(obj, s):
+    obj.y += s
+
+    if obj.top <= 0:
+        obj.top = 0
+    elif obj.bottom >= H:
+        obj.bottom = H
 W = 1280
 H = 720
 FPS = 1000
@@ -31,7 +38,7 @@ pg.init()  # инициализируем pygame
 screen = pg.display.set_mode((W, H))
 pg.display.set_caption('Ping Pong | ') # создаем экран игры разрешением 1280х720px
 
-speed = 100
+speed = 3
 p_speed = 0
 o_speed = 0
 ball_moving = False
@@ -52,4 +59,13 @@ while True:  # цикл игры
     pg.draw.ellipse(screen, VIOLET, ball)
     pg.display.update()
 
+    keys = pg.key.get_pressed()
+    if keys[pg.K_UP]:
+        p_speed -= speed
+    elif keys[pg.K_DOWN]:
+        p_speed += speed
+    else:
+        p_speed = 0
+
     ball_move(ball)
+    player_motion(player,p_speed)
